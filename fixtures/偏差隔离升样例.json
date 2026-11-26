@@ -1,0 +1,64 @@
+{
+  "类型": "偏差隔离",
+  "批次编号": "偏差隔离-demo",
+  "版本": [
+    {
+      "开关键": "checkout.skew_guard",
+      "版本号": 7,
+      "版本键": "checkout.skew_guard@7",
+      "载荷": {
+        "enabled": true,
+        "variant": "isolate"
+      },
+      "说明": "偏差隔离升夹具版本"
+    }
+  ],
+  "分桶": [
+    {
+      "桶键": "checkout.skew_guard-gray3",
+      "开关键": "checkout.skew_guard",
+      "桶类型": "边缘组",
+      "规则": {
+        "edges": ["edge-a", "edge-b", "edge-c"]
+      }
+    }
+  ],
+  "下发": [
+    {
+      "票号": "票-skew-isolation",
+      "版本键": "checkout.skew_guard@7",
+      "桶键": "checkout.skew_guard-gray3",
+      "说明": "两确认一偏差夹具票"
+    }
+  ],
+  "回读": [
+    {
+      "票号": "票-skew-isolation",
+      "边缘键": "edge-a",
+      "所见版本键": "checkout.skew_guard@7",
+      "结果": "确认"
+    },
+    {
+      "票号": "票-skew-isolation",
+      "边缘键": "edge-b",
+      "所见版本键": "checkout.skew_guard@7",
+      "结果": "确认"
+    },
+    {
+      "票号": "票-skew-isolation",
+      "边缘键": "edge-c",
+      "所见版本键": "checkout.skew_guard@6",
+      "结果": "确认",
+      "说明": "故意嘴上确认但所见版本拧花，放量门必须改判偏差并隔离"
+    }
+  ],
+  "纠偏回读": [
+    {
+      "票号": "票-skew-isolation",
+      "边缘键": "edge-c",
+      "所见版本键": "checkout.skew_guard@7",
+      "结果": "确认",
+      "说明": "edge-c 纠偏后回读"
+    }
+  ]
+}
